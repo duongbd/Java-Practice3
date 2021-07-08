@@ -23,6 +23,7 @@ public class MainRunnable implements Runnable {
         Scanner scanner = new Scanner(System.in);
         boolean isStopProgram = false;
         System.out.println("---Main Menu---");
+        System.out.println("Type \"help\" to more detail");
         while (!isStopProgram) {
             switch (scanner.nextLine().toLowerCase()) {
                 case "1":
