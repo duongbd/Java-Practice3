@@ -12,13 +12,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Scanner;
 
 public class ShowRunnable implements Runnable {
     static public int number;
-    List<Production> productions = new ArrayList<>();
 
-    private void readInputToList(String pathname) {
+    private void readInputToList(String pathname,List<Production> productions) {
         File file = new File(pathname);
         FileReader fileReader;
 
@@ -40,26 +38,27 @@ public class ShowRunnable implements Runnable {
     @Override
     public void run() {
         System.out.println("---Show---");
+        List<Production> productions = new ArrayList<>();
         if (number == 3) {
-            readInputToList(Main.PATH_PRODUCTION_SOLD);
+            readInputToList(Main.PATH_PRODUCTION_SOLD,productions);
             for (Production production : productions) {
                 production.show();
             }
         } else if (number == 4) {
-            readInputToList(Main.PATH_PRODUCTION_N_SOLD_N_EXPIRED);
+            readInputToList(Main.PATH_PRODUCTION_N_SOLD_N_EXPIRED,productions);
             for (Production production : productions) {
                 production.show();
             }
         } else if (number == 5) {
-            readInputToList(Main.PATH_PRODUCTION_EXPIRED);
+            readInputToList(Main.PATH_PRODUCTION_EXPIRED,productions);
             for (Production production : productions) {
                 production.show();
             }
 
         } else if (number == 6) {
-            readInputToList(Main.PATH_PRODUCTION_N_SOLD_N_EXPIRED);
+            readInputToList(Main.PATH_PRODUCTION_N_SOLD_N_EXPIRED,productions);
             Calendar today = Calendar.getInstance();
-            today.add(Calendar.HOUR, -168);
+            today.add(Calendar.HOUR, 168);
             for (Production production : productions) {
                 Calendar cal = Calendar.getInstance();
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -68,10 +67,9 @@ public class ShowRunnable implements Runnable {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                if (cal.getTime().after(today.getTime()))
+                if (cal.getTime().before(today.getTime()))
                     production.show();
             }
-
         }
 
     }
